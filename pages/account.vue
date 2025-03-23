@@ -1,0 +1,3 @@
+<template>
+  Account page
+</template>
