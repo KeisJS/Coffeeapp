@@ -28,10 +28,10 @@ watchEffect(async () => {
 <template>
   <form @submit.prevent="onSubmit">
     <div>
-      <input type="email" placeholder="Enter email" v-model="data.email">
+      <input type="email" placeholder="Enter email" v-model="data.email" autocomplete="username">
     </div>
     <div>
-      <input type="password" placeholder="Enter password" v-model="data.password">
+      <input type="password" placeholder="Enter password" v-model="data.password" autocomplete="current-password">
     </div>
     <div>
       <button type="submit">Войти</button>

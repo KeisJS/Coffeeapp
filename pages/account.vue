@@ -1,4 +1,5 @@
 <template>
+  <Products />
   <div>
     <ButtonLogout />
   </div>
