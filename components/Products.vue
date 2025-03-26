@@ -2,7 +2,6 @@
 import useProductApi from '~/composables/api/useProductApi'
 import useFiltersApi from '~/composables/api/useFiltersApi'
 
-
 const { data: products } = await useProductApi()
 const { data: filters } = await useFiltersApi()
 const activeFilters = computed(() => {
@@ -15,7 +14,6 @@ const activeFilters = computed(() => {
 })
 
 const selectedDate = ref('')
-
 const selectedFilters = reactive<number[]>([])
 const selectedProducts = computed(() => {
   let resultProducts = products.value
@@ -55,34 +53,62 @@ function onSelectDate(date: string) {
 </script>
 
 <template>
-  <table>
-    <thead>
-    <tr>
-      <th>Модель</th>
-      <th>Дата создания</th>
-      <th>Статус</th>
-      <th>Характеристики</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr v-for="product in selectedProducts">
-      <td>{{ product.title }}</td>
-      <td @click="onSelectDate(product.dateCreated)">{{ product.dateCreated }}</td>
-      <td>{{ product.status }}</td>
-      <td>
-        <div v-for="filterId in product.filterIds">
-          {{ activeFilters.find(filter => filter.id === filterId)!.title }}
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  <div>
-    <span v-for="filter of activeFilters" @click="onSelectFilter(filter.id)">
-      <b v-if="selectedFilters.includes(filter.id)">
+  <div class="row mt-2 mb-2">
+    <div class="col">
+      <span
+          v-for="filter of activeFilters"
+          @click="onSelectFilter(filter.id)"
+          :class="{
+            'clickable': true,
+            'ms-2': true,
+            'me-2': true,
+            'cursor-pointer': true,
+            badge: true,
+            'text-bg-primary': selectedFilters.includes(filter.id),
+            'text-bg-secondary': !selectedFilters.includes(filter.id)}"
+      >
         {{ filter.title }}
-      </b>
-      <span v-else>{{ filter.title }}</span>
-    </span>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <table class="table w-100">
+        <thead>
+        <tr>
+          <th>Модель</th>
+          <th>Дата создания</th>
+          <th>Статус</th>
+          <th>Характеристики</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="product in selectedProducts">
+          <td>{{ product.title }}</td>
+          <td @click="onSelectDate(product.dateCreated)">
+            <span class="clickable clickable__col">
+              {{ product.dateCreated }}
+            </span>
+          </td>
+          <td>{{ product.status }}</td>
+          <td>
+            <div v-for="filterId in product.filterIds">
+              {{ activeFilters.find(filter => filter.id === filterId)!.title }}
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
+
+<style>
+.clickable {
+  cursor: pointer;
+}
+
+.clickable__col {
+  border-bottom: 1px dotted var(--bs-dark);
+}
+</style>

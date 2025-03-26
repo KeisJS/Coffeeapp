@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Button from '~/components/ui/Button.vue'
+
 const { loggedIn, clear } = useUserSession()
 
 async function onClick() {
@@ -8,7 +10,8 @@ async function onClick() {
 </script>
 
 <template>
-  <button v-if="loggedIn" @click="onClick">
+  <Button v-if="loggedIn" @click="onClick">
     Выход
-  </button>
+  </Button>
+  <NuxtLink v-else to="/login">Войдите</NuxtLink>
 </template>
