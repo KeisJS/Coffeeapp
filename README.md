@@ -13,7 +13,7 @@ corepack enable
 corepack install --global yarn@stable
 ```
 
-Установить зависимости
+Установить зависимостей
 
 ```bash
 yarn install
@@ -35,7 +35,7 @@ yarn preview
 
 ## Production
 
-Создать приложение для production
+Создать production сборку
 
 ```bash
 # yarn
