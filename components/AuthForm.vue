@@ -46,8 +46,12 @@ watchEffect(async () => {
         </Button>
       </div>
     </div>
-    <div v-if="error">
-      {{ error }}
+    <div class="row justify-content-center mt-4">
+      <div v-show="error"  class="col col-sm-6 col-md-3 position-relative">
+        <div class="form-control translate-middle-x bg-warning position-absolute top-0 start-50">
+          {{ error }}
+        </div>
+      </div>
     </div>
   </form>
 </template>
