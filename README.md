@@ -1,75 +1,51 @@
-# Nuxt Minimal Starter
+# Coffee demo app
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Простое приложение на Nuxt. Имеет два маршрута /login и /account. Настроены сессии и аутентификация. 
 
-## Setup
+## Настройка
 
-Make sure to install dependencies:
+Подготовка yarn
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+# включить corepack
+corepack enable
+# установить последнею версию yarn
+corepack install --global yarn@stable
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+Установить зависимости
 
 ```bash
-# npm
-npm run dev
+yarn install
+```
 
-# pnpm
-pnpm dev
+## Сервер разработки
 
-# yarn
+Запуск сервера разработки на `http://localhost:3000`:
+
+```bash
 yarn dev
+```
 
-# bun
-bun run dev
+Запуск локальной production сборки:
+
+```bash
+yarn preview
 ```
 
 ## Production
 
-Build the application for production:
+Создать приложение для production
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
 # yarn
 yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Развертывание
+- необходим хостинг node.js
+- создать production сборку
+- скопировать содержимое `/.output` на хостинг
+- добавить переменную окружения `NUXT_SESSION_PASSWORD=a-random-password-with-at-least-32-characters`
+- запустить сервер `node .output/server/index.mjs`
