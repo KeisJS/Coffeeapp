@@ -1,55 +1,22 @@
 <script setup lang="ts">
-import useProductApi from '~/composables/api/useProductApi'
-import useFiltersApi from '~/composables/api/useFiltersApi'
 
-const { data: products } = await useProductApi()
-const { data: filters } = await useFiltersApi()
-const activeFilters = computed(() => {
-  return filters.value!.flat()
-      .filter(
-          filter => products.value!.some(
-              product => product.filterIds.includes(filter.id)
-          )
-      )
-})
+const store = useProductsStore()
 
-const selectedDate = ref('')
-const selectedFilters = reactive<number[]>([])
-const selectedProducts = computed(() => {
-  let resultProducts = products.value
-  if (selectedFilters.length) {
-    resultProducts = products.value!.filter(product => {
-      for (let filterId of product.filterIds) {
-        if (selectedFilters.includes(filterId)) {
-          return true
-        }
-      }
-    })
-  }
+const {
+  toggleFilter,
+  toggleDate,
+  fetchProducts,
+  fetchFilters,
+} = store
 
-  if (selectedDate.value) {
-    resultProducts = resultProducts!.filter(product => product.dateCreated === selectedDate.value)
-  }
+const {
+  activeFilters,
+  selectedFilters,
+  selectedProducts,
+} = storeToRefs(store)
 
-  return resultProducts
-})
-
-function onSelectFilter(id: number) {
-  const indexId = selectedFilters.indexOf(id)
-  if (indexId !== -1) {
-    selectedFilters.splice(indexId, 1)
-  } else {
-    selectedFilters.push(id)
-  }
-}
-
-function onSelectDate(date: string) {
-  if (selectedDate.value === date) {
-    selectedDate.value = ''
-  } else {
-    selectedDate.value = date
-  }
-}
+await fetchProducts()
+await fetchFilters()
 </script>
 
 <template>
@@ -57,7 +24,7 @@ function onSelectDate(date: string) {
     <div class="col">
       <span
           v-for="filter of activeFilters"
-          @click="onSelectFilter(filter.id)"
+          @click="toggleFilter(filter.id)"
           :class="{
             'clickable': true,
             'ms-2': true,
@@ -85,7 +52,7 @@ function onSelectDate(date: string) {
         <tbody>
         <tr v-for="product in selectedProducts">
           <td>{{ product.title }}</td>
-          <td @click="onSelectDate(product.dateCreated)">
+          <td @click="toggleDate(product.dateCreated)">
             <span class="clickable clickable__col">
               {{ product.dateCreated }}
             </span>
