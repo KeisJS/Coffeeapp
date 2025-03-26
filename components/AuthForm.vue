@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import useUserLoginApi from '~/composables/api/useUserLoginApi'
 import { useUserSession } from '#imports'
+import TextInput from '~/components/ui/TextInput.vue'
+import Button from '~/components/ui/Button.vue'
 
 const data = reactive({
   email: '',
@@ -27,14 +29,22 @@ watchEffect(async () => {
 
 <template>
   <form @submit.prevent="onSubmit">
-    <div>
-      <input type="email" placeholder="Enter email" v-model="data.email" autocomplete="username">
+    <div class="row justify-content-center mb-4">
+      <div class="col col-sm-6 col-md-4">
+        <TextInput type="email" v-model="data.email" autocomplete="username" />
+      </div>
     </div>
-    <div>
-      <input type="password" placeholder="Enter password" v-model="data.password" autocomplete="current-password">
+    <div class="row justify-content-center mb-4">
+      <div class="col col-sm-6 col-md-4">
+        <TextInput type="password" v-model="data.password" autocomplete="current-password" />
+      </div>
     </div>
-    <div>
-      <button type="submit">Войти</button>
+    <div class="row justify-content-center">
+      <div class="col col-sm-6 col-md-3">
+        <Button type="submit" class="form-control">
+          Войти
+        </Button>
+      </div>
     </div>
     <div v-if="error">
       {{ error }}

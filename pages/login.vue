@@ -8,6 +8,10 @@ if (loggedIn.value) {
 
 <template>
   <NuxtLayout name="single-content">
-    <AuthForm />
+    <div class="min-vh-100 row align-items-center">
+      <div class="col">
+        <AuthForm />
+      </div>
+    </div>
   </NuxtLayout>
 </template>
